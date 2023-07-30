@@ -12,7 +12,7 @@ echo "deb https://debian.sur5r.net/i3/ bullseye main" | \
 sudo tee /etc/apt/sources.list.d/sur5r-i3.list
 
 sudo apt update
-sudo apt install i3 lightdm light-locker x11-xserver-utils fonts-noto-cjk fcitx5-mozc thunar im-config pm-utils firefox-esr
+sudo apt install i3 lightdm light-locker x11-xserver-utils fonts-noto-cjk fcitx5-mozc thunar im-config pm-utils firefox-esr feh
 
 # git setup
 git config --global user.name water-dropwort
