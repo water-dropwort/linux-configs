@@ -71,3 +71,6 @@
 (set-default-coding-systems 'utf-8)
 ;; Set coding-system user for communicationg with other x clients.
 (set-selection-coding-system 'utf-8)
+
+(require 'desktop)
+(desktop-save-mode 1)
