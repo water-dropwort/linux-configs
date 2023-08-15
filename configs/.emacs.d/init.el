@@ -74,3 +74,6 @@
 
 (require 'desktop)
 (desktop-save-mode 1)
+
+;; C++ mode config
+(add-hook 'c++-mode-hook '(lambda () (electric-indent-local-mode -1)))
