@@ -87,11 +87,12 @@
 
 (require 'platformio-mode)
 (setq path-to-platformio "$HOME/.local/bin/platformio")
+(add-to-list 'projectile-project-root-files "platformio.ini")
 
 ;; C++ mode config
 (add-hook 'c++-mode-hook (lambda ()
                            (electric-indent-local-mode -1)
-                           (lsp-deferred)
+                           (lsp)
                            (platformio-conditionally-enable)))
 
 ;; C mode config
