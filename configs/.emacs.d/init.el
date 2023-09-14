@@ -1,14 +1,27 @@
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
-(package-initialize)
+;; <leaf-install-code>
+(eval-and-compile
+  (customize-set-variable
+   'package-archives '(("org" . "https://orgmode.org/elpa/")
+                       ("melpa" . "https://melpa.org/packages/")
+                       ("gnu" . "https://elpa.gnu.org/packages/")))
+  (package-initialize)
+  (unless (package-installed-p 'leaf)
+    (package-refresh-contents)
+    (package-install 'leaf))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(company platformio-mode flycheck ccls lsp-mode markdown-mode zenburn-theme)))
+  (leaf leaf-keywords
+    :ensure t
+    :init
+    ;; optional packages if you want to use :hydra, :el-get, :blackout,,,
+    (leaf hydra :ensure t)
+    (leaf el-get :ensure t)
+    (leaf blackout :ensure t)
+
+    :config
+    ;; initialize leaf-keywords.el
+    (leaf-keywords-init)))
+;; </leaf-install-code>
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -16,8 +29,10 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; activate zenburn theme
-(load-theme 'zenburn t)
+(leaf zenburn-theme
+  :ensure t
+  :config (load-theme 'zenburn t))
+
 ;; overwrite face setting
 (set-face-attribute 'default nil :background "black")
 (set-face-attribute 'region nil :background "#77d9a8" :foreground "black")
@@ -73,32 +88,58 @@
 ;; Set coding-system user for communicationg with other x clients.
 (set-selection-coding-system 'utf-8)
 
-(require 'desktop)
-(desktop-save-mode 1)
+(leaf desktop
+  :config (desktop-save-mode t))
 
 ;; ccls config
-(require 'ccls)
-(setq ccls-executable "/usr/bin/ccls")
-(setq lsp-prefer-flymake nil)
-(setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+(leaf ccls
+  :ensure t
+  :setq
+  (ccls-executable . "/usr/bin/ccls")
+  (lsp-prefer-flymake . nil)
+  :setq-default
+  (flycheck-disabled-checkers . '(c/c++-clang c/c++-cppcheck c/c++-gcc)))
 
 ;; language server
-(require 'lsp-mode)
+(leaf lsp-mode
+  :ensure t
+  :custom
+  `((lsp-completion-provider . :none))
+  :hook ((c++-mode-hook c-mode-hook) . lsp-deferred))
 
-(require 'platformio-mode)
-(setq path-to-platformio "$HOME/.local/bin/platformio")
-(add-to-list 'projectile-project-root-files "platformio.ini")
+(leaf platformio-mode
+  :ensure nil
+  :el-get water-dropwort/PlatformIO-Mode
+  :config
+  (add-to-list 'projectile-project-root-files "platformio.ini")
+  :setq
+  (path-to-platformio . "$HOME/.local/bin/platformio")
+  :hook
+  ((c++-mode-hook c-mode-hook) . platformio-conditionally-enable))
 
 ;; C++ mode config
 (add-hook 'c++-mode-hook (lambda ()
-                           (electric-indent-local-mode -1)
-                           (lsp-deferred)
-                           (platformio-conditionally-enable)))
+                           (electric-indent-local-mode -1)))
 
-;; C mode config
-(add-hook 'c-mode-hook   (lambda ()
-                           (lsp-deferred)
-                           (platformio-conditionally-enable)))
+(leaf vertico
+  :ensure t
+  :init
+  (vertico-mode)
+  :setq
+  (vertico-cycle . t))
 
-;; COMPANY MODE
-(add-hook 'after-init-hook 'global-company-mode)
+(leaf corfu
+  :ensure t
+  :custom
+  `((corfu-auto . t)
+    (corfu-cycle . t)
+    (corfu-auto-prefix . 1)
+    (corfu-auto-delay . 0))
+  :hook
+  (emacs-startup-hook . global-corfu-mode))
+
+(leaf consult
+  :ensure nil
+  :el-get water-dropwort/consult)
+
+(provide 'init)
