@@ -98,14 +98,21 @@
   (ccls-executable . "/usr/bin/ccls")
   (lsp-prefer-flymake . nil)
   :setq-default
-  (flycheck-disabled-checkers . '(c/c++-clang c/c++-cppcheck c/c++-gcc)))
+  (flycheck-disabled-checkers . '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  )
 
 ;; language server
 (leaf lsp-mode
   :ensure t
-  :custom
-  `((lsp-completion-provider . :none))
-  :hook ((c++-mode-hook c-mode-hook) . lsp-deferred))
+  ;:custom
+  :init
+  (defun my/lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(flex)))
+  :hook
+  ((c++-mode-hook c-mode-hook) . lsp-deferred)
+  ;(lsp-completion-mode . my/lsp-mode-setup-completion)
+  )
 
 (leaf platformio-mode
   :ensure nil
@@ -128,18 +135,45 @@
   :setq
   (vertico-cycle . t))
 
-(leaf corfu
+;;(leaf corfu
+;;  :ensure t
+;;  :custom
+;;  (corfu-auto . t)
+;;  (corfu-cycle . t)
+;;  (corfu-auto-delay . 0)
+;;  (corfu-auto-prefix . 1)
+;;  (completion-styles . '(basic))
+;;  (tab-always-indent . 'complete)
+;;  (lsp-completion-provider . :none)
+;;  :hook
+;;  (emacs-startup-hook . global-corfu-mode)
+;;  )
+
+;:(leaf cape
+;:  :ensure t
+;:  :config
+;:  (add-to-list 'completion-at-point-functions #'cape-keyword t)
+;:  )
+
+(leaf company
   :ensure t
   :custom
-  `((corfu-auto . t)
-    (corfu-cycle . t)
-    (corfu-auto-prefix . 1)
-    (corfu-auto-delay . 0))
-  :hook
-  (emacs-startup-hook . global-corfu-mode))
+  (company-idle-delay . 0)
+  (company-minimum-prefix-length . 1)
+  :global-minor-mode
+  global-company-mode)
 
 (leaf consult
   :ensure nil
   :el-get water-dropwort/consult)
+
+;;(leaf clang-capf
+;;  :ensure t
+;;  :config
+;;  (defun local/clang-capf-init ()
+;;    (add-hook 'completion-at-point-functions #'clang-capf nil t))
+;;  (add-hook 'c-mode-hook #'local/clang-capf-init)
+;;  (add-hook 'c++-mode-hook #'local/clang-capf-init)
+;; )
 
 (provide 'init)
