@@ -1,8 +1,15 @@
 #!/bin/bash
 
-python3 -c "$(curl -fsSL https://raw.githubusercontent.com/platformio/platformio/master/scripts/get-platformio.py)"
+curl -fsSL -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py
+python3 get-platformio.py
+rm get-platformio.py
 
-mkdir $HOME/.local/bin
+BIN_DIR=$HOME/.local/bin
+if [ ! -d $BIN_DIR ]; then
+  mkdir $BIN_DIR
+else
+  echo "[INFO] .local/bin directory allready exists."
+fi
 
 # Appending PATH=$HOME/.local/bin:$PATH to .bashrc file.
 ln -s ~/.platformio/penv/bin/platformio ~/.local/bin/platformio
