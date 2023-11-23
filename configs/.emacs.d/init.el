@@ -29,6 +29,10 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; unset key bindings
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-\\"))
+
 (leaf zenburn-theme
   :ensure t
   :config (load-theme 'zenburn t))
@@ -153,6 +157,5 @@
   )
 
 (add-hook 'find-file-hook (lambda () (view-mode 1)))
-
 
 (provide 'init)
