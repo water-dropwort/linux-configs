@@ -160,4 +160,16 @@
 
 (add-hook 'find-file-hook (lambda () (view-mode 1)))
 
+;; Config for whitespace-mode
+(leaf whitespace-mode
+  :custom-face
+  ((whitespace-space
+    whitespace-tab
+    whitespace-newline) .
+   '((t (:foreground "slategray" :background nil))))
+  :hook
+  ((prog-mode-hook) . whitespace-mode)
+  )
+
+
 (provide 'init)
