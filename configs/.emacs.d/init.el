@@ -111,7 +111,6 @@
           '(flex)))
   :hook
   ((c++-mode-hook c-mode-hook) . lsp-deferred)
-  ;(lsp-completion-mode . my/lsp-mode-setup-completion)
   )
 
 (leaf platformio-mode
@@ -135,46 +134,18 @@
   :setq
   (vertico-cycle . t))
 
-;;(leaf corfu
-;;  :ensure t
-;;  :custom
-;;  (corfu-auto . t)
-;;  (corfu-cycle . t)
-;;  (corfu-auto-delay . 0)
-;;  (corfu-auto-prefix . 1)
-;;  (completion-styles . '(basic))
-;;  (tab-always-indent . 'complete)
-;;  (lsp-completion-provider . :none)
-;;  :hook
-;;  (emacs-startup-hook . global-corfu-mode)
-;;  )
-
-;:(leaf cape
-;:  :ensure t
-;:  :config
-;:  (add-to-list 'completion-at-point-functions #'cape-keyword t)
-;:  )
-
 (leaf company
   :ensure t
   :custom
   (company-idle-delay . 0)
   (company-minimum-prefix-length . 1)
-  :global-minor-mode
-  global-company-mode)
+  :hook
+  (prog-mode-hook . company-mode)
+  )
 
 (leaf consult
   :ensure nil
   :el-get water-dropwort/consult)
-
-;;(leaf clang-capf
-;;  :ensure t
-;;  :config
-;;  (defun local/clang-capf-init ()
-;;    (add-hook 'completion-at-point-functions #'clang-capf nil t))
-;;  (add-hook 'c-mode-hook #'local/clang-capf-init)
-;;  (add-hook 'c++-mode-hook #'local/clang-capf-init)
-;; )
 
 (add-hook 'find-file-hook (lambda () (view-mode 1)))
 
