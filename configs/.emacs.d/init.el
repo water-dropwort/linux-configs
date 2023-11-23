@@ -176,4 +176,7 @@
 ;;  (add-hook 'c++-mode-hook #'local/clang-capf-init)
 ;; )
 
+(add-hook 'find-file-hook (lambda () (view-mode 1)))
+
+
 (provide 'init)
