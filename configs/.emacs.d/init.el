@@ -75,6 +75,8 @@
 (global-set-key (kbd "C-c <down>") 'windmove-down)
 (global-set-key (kbd "C-c <up>") 'windmove-up)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
+;; kill current buffer
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
 ;; Hide toolbar
 (tool-bar-mode -1)
 ;; Display line number
