@@ -145,7 +145,12 @@
 
 (leaf consult
   :ensure nil
-  :el-get water-dropwort/consult)
+  :el-get water-dropwort/consult
+  :bind
+  ("C-c g" . consult-grep)
+  ("C-c l" . consult-line)
+  ("C-c i" . consult-imenu)
+  )
 
 (add-hook 'find-file-hook (lambda () (view-mode 1)))
 
