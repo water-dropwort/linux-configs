@@ -161,15 +161,26 @@
 (add-hook 'find-file-hook (lambda () (view-mode 1)))
 
 ;; Config for whitespace-mode
-(leaf whitespace-mode
+(leaf whitespace
+  :require t
   :custom-face
-  ((whitespace-space
-    whitespace-tab
-    whitespace-newline) .
-   '((t (:foreground "slategray" :background nil))))
+  (whitespace-space
+   . '((t (:foreground "lightgray" :background "orangered"))))
+  (whitespace-trailing
+   . '((t (:foreground "lightgray" :background "orangered"))))
+  ((whitespace-newline whitespace-tab)
+   . '((t (:foreground "lightgray" :background "gray20"))))
+  :setq
+  (whitespace-style
+   . '(face spaces space-mark trailing
+            tabs tab-mark newline newline-mark))
+  (whitespace-space-regexp . "\\(\x3000+\\)")
+  (whitespace-display-mappings
+   . '((space-mark ?\x3000 [?\□])
+       (tab-mark ?\t [?\xBB ?\t])
+       (newline-mark ?\n [?↵ ?\n] [?$ ?\n])))
   :hook
   ((prog-mode-hook) . whitespace-mode)
   )
-
 
 (provide 'init)
