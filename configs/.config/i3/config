@@ -9,8 +9,21 @@ set $mod Mod4
 font pango:monospace 11
 
 # Gaps
-gaps inner 2px
-gaps outer 1px
+gaps inner 5px
+gaps horizontal 10px
+
+mode "gaps" {
+     bindsym Up   gaps horizontal current plus 20px
+     bindsym Down gaps horizontal current minus 20px
+     bindsym n    gaps horizontal current set 200px
+     bindsym w    gaps horizontal current set 10px
+
+     bindsym Return mode "default"
+     bindsym Espace mode "default"
+     bindsym $mod+g mode "default"
+}
+
+bindsym $mod+g mode "gaps"
 
 # set wallpaper
 exec --no-startup-id ~/.fehbg
