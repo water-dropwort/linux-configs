@@ -158,8 +158,21 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Power management' -B 'Yes, exit i3' 'i3-msg exit' -B 'Suspend' 'sudo pm-suspend' -B 'Shutdown' 'sudo shutdown -h now' -B 'Reboot' 'sudo shutdown -r now' -f 'pango:monospace 10'"
+
+# Power management mode
+mode "power mode" {
+     bindsym e exec "i3-msg exit"
+     bindsym s mode "default"; exec "sudo pm-suspend"
+     bindsym r exec "sudo shutdown -r now"
+     bindsym h exec "sudo shutdown -h now"
+
+     bindsym Return mode "default"
+     bindsym Escape mode "default"
+     bindsym $mod+p mode "default"
+}
+
+bindsym $mod+p mode "power mode"
+
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
