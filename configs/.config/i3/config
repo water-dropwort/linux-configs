@@ -31,6 +31,8 @@ exec --no-startup-id ~/.fehbg
 #
 exec --no-startup-id picom -CGb
 
+exec --no-startup-id /usr/bin/xfce4-power-manager --daemon
+
 # lock the screen when the computer is suspended.
 exec --no-startup-id light-locker --lock-on-suspend
 
