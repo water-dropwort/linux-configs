@@ -110,11 +110,14 @@
 ;; language server
 (leaf lsp-mode
   :ensure t
-  ;:custom
   :init
   (defun my/lsp-mode-setup-completion ()
     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
           '(flex)))
+  (leaf lsp-pyright
+    :ensure t
+    :hook
+    (python-mode-hook . lsp-deferred))
   :hook
   ((c++-mode-hook c-mode-hook) . lsp-deferred)
   )
@@ -182,5 +185,8 @@
   :hook
   ((prog-mode-hook) . whitespace-mode)
   )
+
+(leaf csharp-mode
+  :ensure t)
 
 (provide 'init)
