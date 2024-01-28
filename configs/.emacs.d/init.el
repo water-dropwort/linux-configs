@@ -38,7 +38,7 @@
   :config (load-theme 'zenburn t))
 
 ;; overwrite face setting
-(set-face-attribute 'default nil :background "black")
+(set-face-attribute 'default nil :background "black" :height 100)
 (set-face-attribute 'region nil :background "#77d9a8" :foreground "black")
 (set-face-attribute 'font-lock-variable-name-face nil :foreground "white")
 (set-face-attribute 'font-lock-string-face nil :foreground "#f6aa00")
