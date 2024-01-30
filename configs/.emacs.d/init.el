@@ -75,6 +75,10 @@
 (global-set-key (kbd "C-c <down>") 'windmove-down)
 (global-set-key (kbd "C-c <up>") 'windmove-up)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
+(global-set-key (kbd "C-c S-<left>") 'windmove-swap-states-left)
+(global-set-key (kbd "C-c S-<down>") 'windmove-swap-states-down)
+(global-set-key (kbd "C-c S-<up>") 'windmove-swap-states-up)
+(global-set-key (kbd "C-c S-<right>") 'windmove-swap-states-right)
 ;; kill current buffer
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 ;; Hide toolbar
