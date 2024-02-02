@@ -82,7 +82,8 @@
 ;; kill current buffer
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 ;; Hide toolbar
-(tool-bar-mode -1)
+;; commentout: If the following code is active, the tabs in tab-bar-mode are not displayed immediately after startup.
+;(tool-bar-mode -1)
 ;; Display line number
 (global-display-line-numbers-mode 1)
 ;; Complement parentheses
@@ -192,5 +193,17 @@
 
 (leaf csharp-mode
   :ensure t)
+
+(leaf tab-bar
+  :require t
+  :hook
+  (emacs-startup-hook . tab-bar-mode)
+  ;; If set to after-init-hook, a blank space will be created in the minibuffer.
+  ;; The height of that space appears to be about the same height as the toolbar.
+  :custom-face
+  (tab-bar-tab
+   . '((t (:foreground "black" :background "#77d9a8"))))
+  (tab-bar-tab-inactive
+   . '((t (:foreground "white" :background "dimgray")))))
 
 (provide 'init)
