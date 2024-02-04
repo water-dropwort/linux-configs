@@ -81,9 +81,6 @@
 (global-set-key (kbd "C-c S-<right>") 'windmove-swap-states-right)
 ;; kill current buffer
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
-;; Hide toolbar
-;; commentout: If the following code is active, the tabs in tab-bar-mode are not displayed immediately after startup.
-;(tool-bar-mode -1)
 ;; Display line number
 (global-display-line-numbers-mode 1)
 ;; Complement parentheses
@@ -98,9 +95,6 @@
 (set-default-coding-systems 'utf-8)
 ;; Set coding-system user for communicationg with other x clients.
 (set-selection-coding-system 'utf-8)
-
-(leaf desktop
-  :config (desktop-save-mode t))
 
 ;; ccls config
 (leaf ccls
@@ -195,16 +189,24 @@
 (leaf csharp-mode
   :ensure t)
 
-(leaf tab-bar
-  :require t
+(leaf desktop/tool-bar/tab-bar
+  ;; Tabs are not displayed at startup.
+  ;; It seems to be influenced by desktop-save,tool-bar and i3wm.
+  ;; Setting these when window-setup-hook is fired appears to resolve the issue.
+  :init
+  (leaf tab-bar
+    :require t
+    :custom-face
+    (tab-bar-tab
+     . '((t (:foreground "black" :background "#77d9a8"))))
+    (tab-bar-tab-inactive
+     . '((t (:foreground "white" :background "dimgray")))))
   :hook
-  (emacs-startup-hook . tab-bar-mode)
-  ;; If set to after-init-hook, a blank space will be created in the minibuffer.
-  ;; The height of that space appears to be about the same height as the toolbar.
-  :custom-face
-  (tab-bar-tab
-   . '((t (:foreground "black" :background "#77d9a8"))))
-  (tab-bar-tab-inactive
-   . '((t (:foreground "white" :background "dimgray")))))
+  (window-setup-hook . (lambda ()
+                         (progn
+                           (desktop-save-mode t)
+                           (desktop-read)
+                           (tool-bar-mode -1)
+                           (tab-bar-mode t)))))
 
 (provide 'init)
