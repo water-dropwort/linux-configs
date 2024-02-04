@@ -153,9 +153,10 @@
   :custom
   (company-idle-delay . 0)
   (company-minimum-prefix-length . 1)
+  :custom-face
+  (company-tooltip-selection . '((t (:box t))))
   :hook
-  (prog-mode-hook . company-mode)
-  )
+  (prog-mode-hook . company-mode))
 
 (leaf consult
   :ensure nil
