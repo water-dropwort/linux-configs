@@ -201,6 +201,10 @@
      . '((t (:foreground "black" :background "#77d9a8"))))
     (tab-bar-tab-inactive
      . '((t (:foreground "white" :background "dimgray")))))
+  (leaf desktop
+    :require t
+    :config
+    (add-to-list 'desktop-modes-not-to-save 'dired-mode))
   :hook
   (window-setup-hook . (lambda ()
                          (progn
