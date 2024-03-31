@@ -161,7 +161,13 @@
   ("C-c i" . consult-imenu)
   )
 
-(add-hook 'find-file-hook (lambda () (view-mode 1)))
+;; Existing buffers will is enabled view-mode by default at first.
+(defun my/find-file-setup ()
+  (when (and (buffer-file-name)
+             (file-exists-p (buffer-file-name))
+             (not (buffer-modified-p)))
+    (view-mode)))
+(add-hook 'find-file-hook 'my/find-file-setup)
 
 ;; Config for whitespace-mode
 (leaf whitespace
