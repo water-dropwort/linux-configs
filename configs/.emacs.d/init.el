@@ -95,6 +95,8 @@
 (set-default-coding-systems 'utf-8)
 ;; Set coding-system user for communicationg with other x clients.
 (set-selection-coding-system 'utf-8)
+;; Rebinding xref-find command.
+(define-key esc-map "." 'xref-find-definitions-other-window)
 
 ;; ccls config
 (leaf ccls
