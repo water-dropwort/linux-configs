@@ -88,7 +88,7 @@
 ;; Tab/Whitespace setting
 (setq-default tab-width 4 indent-tabs-mode nil)
 ;; Scroll one line
-(setq scroll-conservatively 1)
+(setq scroll-conservatively most-positive-fixnum)
 ;; Prioritize UTF-8 at coding system auto detection
 (prefer-coding-system 'utf-8)
 ;; Set default coding system
@@ -204,6 +204,23 @@
   (leaf desktop
     :require t
     :config
+    (defun my/time-subtract-days (time1 time2)
+      (let ((sub-sec (time-convert (time-subtract time1 time2) 'integer)))
+        (/ sub-sec 60 60 24)))
+    (defvar my/emacs-start-time (current-time))
+    (defun my/desktop-get-var-from-local-variables (vars varname)
+      (let ((ret))
+        (dolist (var vars)
+          (let ((name (car var))
+                (val  (cdr var)))
+            (when (eq name varname)
+              (setq ret val))))
+        ret))
+    (defun my/desktop-buffers-not-to-save-functions (filename bufname mode rest)
+      (let* ((local-vars (nth 5 rest))
+             (display-time (my/desktop-get-var-from-local-variables
+                            local-vars 'buffer-display-time)))
+        (> (my/time-subtract-days display-time my/emacs-start-time) -14)))
     (add-to-list 'desktop-modes-not-to-save 'dired-mode))
   :hook
   (window-setup-hook . (lambda ()
