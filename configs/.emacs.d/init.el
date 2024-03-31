@@ -97,6 +97,9 @@
 (set-selection-coding-system 'utf-8)
 ;; Rebinding xref-find command.
 (define-key esc-map "." 'xref-find-definitions-other-window)
+;; Truncate Line
+(setq-default truncate-lines nil)
+(add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
 
 ;; ccls config
 (leaf ccls
