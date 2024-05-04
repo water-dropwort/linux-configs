@@ -128,6 +128,9 @@
 
 (leaf platformio-mode
   :ensure nil
+  :init
+  (leaf projectile :ensure t)
+  (leaf async :ensure t)
   :el-get water-dropwort/PlatformIO-Mode
   :config
   (add-to-list 'projectile-project-root-files "platformio.ini")
