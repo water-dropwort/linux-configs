@@ -10,7 +10,7 @@ font pango:monospace 6
 for_window [class=".*"] title_format "<span size='x-large'>%title</span>"
 
 # Window border
-for_window [class=".*"] border pixel 2
+for_window [class=".*"] border pixel 4
 
 # Gaps
 gaps inner 0px
@@ -208,9 +208,15 @@ bar {
         separator_symbol " | "
 }
 
+
 # color config
+set $cud_red #ff4b00
+set $cud_yellow #fff100
+set $cud_green #03af7a
+set $cud_skyblue #4dc4ff
+set $cud_white #ffffff
 # class                 border  backgr. text    indicator child_border
-client.focused          #bfe4ff #bfe4ff #000000 #2e9ef4   #bfe4ff
+client.focused          $cud_red $cud_red $cud_white #2e9ef4   $cud_red
 client.focused_inactive #84919e #84919e #ffffff #484e50   #84919e
 client.unfocused        #222222 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
